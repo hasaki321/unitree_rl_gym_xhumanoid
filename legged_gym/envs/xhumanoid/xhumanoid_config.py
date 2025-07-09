@@ -2,35 +2,32 @@ from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobot
 
 class XHumanoidRoughCfg( LeggedRobotCfg ):
     class init_state( LeggedRobotCfg.init_state ):
-        pos = [0.0, 0.0, 0.8] # x,y,z [m]
+        pos = [0.0, 0.0, 1] # x,y,z [m]
         default_joint_angles = {
-           'hip_yaw_l_joint' : 0. ,   
-           'hip_roll_l_joint' : 0,               
-           'hip_pitch_l_joint' : -0.1,         
-           'knee_pitch_l_joint' : 0.3,       
-           'ankle_roll_l_joint' : -0.2,     
-           'hip_yaw_r_joint' : 0. ,   
-           'hip_roll_r_joint' : 0,               
-           'hip_pitch_r_joint' : -0.1,                                               
-           'knee_pitch_r_joint' : 0.3,                                             
-           'ankle_roll_r_joint' : -0.2,                                     
-           # 'torso_joint' : 0., 
-           'l_joint1' : 0., 
-           'shoulder_roll_l_joint' : 0, 
-           'l_joint3' : 0.,
-           'elbow_l_joint'  : 0.,
-           'r_joint1' : 0., 
-           'shoulder_roll_r_joint' : 0, 
-           'r_joint3' : 0.,
-           'elbow_r_joint'  : 0.,
-        }
+        'hip_roll_l_joint':0, 
+        'hip_yaw_l_joint':0, 
+        'hip_pitch_l_joint':-0., 
+        'knee_pitch_l_joint':0., 
+        'ankle_pitch_l_joint':-0., 
+        'ankle_roll_l_joint':0, 
+        'hip_roll_r_joint':0, 
+        'hip_yaw_r_joint':0, 
+        'hip_pitch_r_joint':-0., 
+        'knee_pitch_r_joint':0., 
+        'ankle_pitch_r_joint':-0., 
+        'ankle_roll_r_joint':0, 
+        'shoulder_roll_l_joint':0, 
+        'elbow_l_joint':0, 
+        'shoulder_roll_r_joint':0, 
+        'elbow_r_joint':0, 
+}
     
     class env(LeggedRobotCfg.env):
-        # 3 + 3 + 3 + 10 + 10 + 10 + 2 = 41
-        num_observations = 41
-        num_privileged_obs = 44
-        num_actions = 10
-      
+        # 3 + 3 + 3 + 50 + 50 + 50 + 2 = 161
+        num_observations = 47
+        num_privileged_obs = 50
+        num_actions = 12
+
 
     class domain_rand(LeggedRobotCfg.domain_rand):
         randomize_friction = True
@@ -46,27 +43,41 @@ class XHumanoidRoughCfg( LeggedRobotCfg ):
         control_type = 'P'
           # PD Drive parameters:
         stiffness = {
-            'hip_yaw': 68,
-            'hip_roll': 113, 
-            'hip_pitch': 113,
-            'knee': 100,      
-            'ankle': 30,  
-            'joint1': 113,
-            'shoulder_roll': 150,
-            'joint3': 83,
-            'elbow': 122, 
+        'hip_roll_l_joint':113, 
+        'hip_yaw_l_joint':68, 
+        'hip_pitch_l_joint':113, 
+        'knee_pitch_l_joint':100, 
+        'ankle_pitch_l_joint':60, 
+        'ankle_roll_l_joint':30, 
+        'hip_roll_r_joint':113, 
+        'hip_yaw_r_joint':68, 
+        'hip_pitch_r_joint':113, 
+        'knee_pitch_r_joint':100, 
+        'ankle_pitch_r_joint':60, 
+        'ankle_roll_r_joint':30, 
+        # 'shoulder_roll_l_joint':150, 
+        # 'elbow_l_joint':122, 
+        # 'shoulder_roll_r_joint':150, 
+        # 'elbow_r_joint':122, 
         }
 
         damping = {
-            'hip_yaw': 1.3,  
-            'hip_roll': 1.7,  
-            'hip_pitch': 1.7, 
-            'knee': 2.8,
-            'ankle': 1.7, 
-            'joint1': 1.7,
-            'shoulder_roll': 2.0,
-            'joint3': 1.5,
-            'elbow': 2.2,  
+        'hip_roll_l_joint':1.7, 
+        'hip_yaw_l_joint':1.3, 
+        'hip_pitch_l_joint':1.7, 
+        'knee_pitch_l_joint':2.8, 
+        'ankle_pitch_l_joint':2.2, 
+        'ankle_roll_l_joint':1.7, 
+        'hip_roll_r_joint':1.7, 
+        'hip_yaw_r_joint':1.3, 
+        'hip_pitch_r_joint':1.7, 
+        'knee_pitch_r_joint':2.8, 
+        'ankle_pitch_r_joint':2.2, 
+        'ankle_roll_r_joint':1.7, 
+        # 'shoulder_roll_l_joint':2, 
+        # 'elbow_l_joint':2.2, 
+        # 'shoulder_roll_r_joint':2, 
+        # 'elbow_r_joint':2.2, 
         }
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.25
@@ -74,33 +85,34 @@ class XHumanoidRoughCfg( LeggedRobotCfg ):
         decimation = 4
 
     class asset( LeggedRobotCfg.asset ):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/xhumanoid/urdf/humanoid.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/lite/urdf/humanoid_publish.urdf'
         name = "xhumanoid"
         foot_name = "ankle_roll"
         penalize_contacts_on = ["hip", "knee"]
         terminate_after_contacts_on = ["pelvis"]
-        self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
+        self_collisions = 1 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
   
     class rewards( LeggedRobotCfg.rewards ):
         soft_dof_pos_limit = 0.9
         base_height_target = 0.78
+        
         class scales( LeggedRobotCfg.rewards.scales ):
             tracking_lin_vel = 1.0
             tracking_ang_vel = 0.5
-            lin_vel_z = -2.0
+            lin_vel_z = -0.2
             ang_vel_xy = -0.05
             orientation = -1.0
             base_height = -10.0
             dof_acc = -2.5e-7
+            dof_vel = -1e-3
             feet_air_time = 0.0
-            collision = -1.0
+            collision = 0.0
             action_rate = -0.01
-            torques = 0.0
             dof_pos_limits = -5.0
-            alive = 0.15
+            alive = 1.5
             hip_pos = -1.0
-            contact_no_vel = -0.2
+            contact_no_vel = -0.02
             feet_swing_height = -20.0
             contact = 0.18
 

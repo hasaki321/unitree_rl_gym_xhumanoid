@@ -120,5 +120,5 @@ class XHumanoidRobot(LeggedRobot):
         return torch.sum(penalize, dim=(1,2))
     
     def _reward_hip_pos(self):
-        return torch.sum(torch.square(self.dof_pos[:,[0,1,5,6]]), dim=1)
+        return torch.sum(torch.square(self.dof_pos[:,[0,1,6,7]]), dim=1)
     
