@@ -23,7 +23,7 @@ class XHumanoidRoughCfg( LeggedRobotCfg ):
 }
     
     class env(LeggedRobotCfg.env):
-        # 3 + 3 + 3 + 50 + 50 + 50 + 2 = 161
+        # 3 + 3 + 3 + 12 + 12 + 12 + 2 = 47
         num_observations = 47
         num_privileged_obs = 50
         num_actions = 12
@@ -55,10 +55,6 @@ class XHumanoidRoughCfg( LeggedRobotCfg ):
         'knee_pitch_r_joint':100, 
         'ankle_pitch_r_joint':60, 
         'ankle_roll_r_joint':30, 
-        # 'shoulder_roll_l_joint':150, 
-        # 'elbow_l_joint':122, 
-        # 'shoulder_roll_r_joint':150, 
-        # 'elbow_r_joint':122, 
         }
 
         damping = {
@@ -74,10 +70,6 @@ class XHumanoidRoughCfg( LeggedRobotCfg ):
         'knee_pitch_r_joint':2.8, 
         'ankle_pitch_r_joint':2.2, 
         'ankle_roll_r_joint':1.7, 
-        # 'shoulder_roll_l_joint':2, 
-        # 'elbow_l_joint':2.2, 
-        # 'shoulder_roll_r_joint':2, 
-        # 'elbow_r_joint':2.2, 
         }
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.25
